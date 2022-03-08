@@ -1,0 +1,25 @@
+{
+  "name": "thread-bot",
+  "version": "1.0.0",
+  "description": "A bot for displaying the active threads in a Discord guild.",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "pkgs": "npm install --no-optional"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rarDevelopment/thread-bot.git"
+  },
+  "author": "rardk64",
+  "bugs": {
+    "url": "https://github.com/rarDevelopment/thread-bot/issues"
+  },
+  "homepage": "https://github.com/rarDevelopment/thread-bot#readme",
+  "dependencies": {
+    "chariot.js": "^3.5.0",
+    "discord-lib": "github:rarDevelopment/discord-lib#1.7.0",
+    "dotenv": "^16.0.0",
+    "eris": "^0.16.1"
+  }
+}
