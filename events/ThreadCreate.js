@@ -1,19 +1,7 @@
+const ThreadListUpdater = require('../business/ThreadListUpdater');
+
 exports.setupThreadCreateEvent = async function (bot) {
-    bot.on("threadCreate", async (channel) => {
-        console.log(channel);
+    bot.on("threadCreate", async (thread) => {
+        ThreadListUpdater.updateThreadsList(thread.guild);
     });
 }
-
-// const Chariot = require('chariot.js');
-
-// class ThreadCreate extends Chariot.Event {
-//     constructor() {
-//         super('threadCreate');
-//     }
-
-//     async execute(channel) {
-//         console.log(channel);
-//     }
-// }
-
-// module.exports = new ThreadCreate();
