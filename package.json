@@ -18,7 +18,7 @@
   "homepage": "https://github.com/rarDevelopment/thread-bot#readme",
   "dependencies": {
     "chariot.js": "^3.5.0",
-    "discord-lib": "github:rarDevelopment/discord-lib#1.8.0",
+    "discord-lib": "github:rarDevelopment/discord-lib#1.9.0",
     "dotenv": "^16.0.0",
     "eris": "^0.16.1",
     "mongoose": "^6.2.4"

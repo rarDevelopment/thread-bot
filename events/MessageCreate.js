@@ -1,5 +1,7 @@
+const packageJson = require('../package.json');
 const ThreadListUpdater = require("../business/ThreadListUpdater");
 const ChannelValidator = require("discord-lib/ChannelValidator");
+const MessageSender = require("discord-lib/MessageSender");
 
 exports.setupMessageCreateEvent = function (bot) {
     bot.on('messageCreate', async (msg) => {
@@ -23,9 +25,17 @@ exports.setupMessageCreateEvent = function (bot) {
                             channelIdToMessage = channelInput.replace('<#', '').replace('>', '');
                         }
                     }
-                    const channelToMessage = msg.channel.guild.channels.find(c => c.id === channelIdToMessage);
-                    const messageId = await ThreadListUpdater.updateThreadsList(msg.channel.guild, channelToMessage);
+                    const messageId = await ThreadListUpdater.updateThreadsList(msg.channel.guild, channelIdToMessage);
                     await ThreadListUpdater.setThreadListMessage(msg.guildID, channelIdToMessage, messageId);
+                    break;
+                case "thread.update":
+                    await ThreadListUpdater.updateThreadsList(msg.channel.guild);
+                    msg.addReaction("✅");
+                    break;
+                case "thread.version":
+                case "thread.v":
+                    var messageSender = new MessageSender();
+                    messageSender.sendMessage(`Theodore is at version ${packageJson.version}`, msg.channel, null);
                     break;
                 default:
                     return;
