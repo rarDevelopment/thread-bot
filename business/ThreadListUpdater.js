@@ -42,7 +42,9 @@ class ThreadListUpdater {
         const embedFieldsToAdd = [];
 
         for (const channel in threadsByChannel) {
-            embedFieldsToAdd.push(new EmbedField(`#${channel}`, threadsByChannel[channel].join(', '), false));
+            embedFieldsToAdd.push(new EmbedField(`#${channel}`, threadsByChannel[channel].sort((c1, c2) => {
+                return c1 > c2 ? 1 : -1;
+            }).join('\n'), false));
         }
 
         const messageToSend = new MessageWithEmbed(
