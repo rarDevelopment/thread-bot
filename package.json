@@ -1,6 +1,6 @@
 {
   "name": "thread-bot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A bot for displaying the active threads in a Discord guild.",
   "main": "bot.js",
   "scripts": {

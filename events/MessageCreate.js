@@ -2,6 +2,8 @@ const packageJson = require('../package.json');
 const ThreadListUpdater = require("../business/ThreadListUpdater");
 const ChannelValidator = require("discord-lib/ChannelValidator");
 const MessageSender = require("discord-lib/MessageSender");
+const RoleHelper = require("discord-lib/RoleHelper");
+const resources = require("../resources.json");
 
 exports.setupMessageCreateEvent = function (bot) {
     bot.on('messageCreate', async (msg) => {
@@ -10,6 +12,8 @@ exports.setupMessageCreateEvent = function (bot) {
             return;
         }
 
+        const roleHelper = new RoleHelper(resources.ownerId, [], resources.requiredPermissions);
+
         const inputSplit = msg.content.split(' ').map(s => s.toLowerCase().trim());
 
         if (inputSplit && inputSplit.length > 0) {
@@ -17,6 +21,10 @@ exports.setupMessageCreateEvent = function (bot) {
 
             switch (commandText) {
                 case "thread.set":
+                    if (!roleHelper.canAdministrate(msg.member)) {
+                        msg.addReaction("❌");
+                        return;
+                    }
                     let channelIdToMessage = msg.channel.id;
                     if (inputSplit.length > 1) {
                         const channelInput = inputSplit[1];
@@ -27,8 +35,13 @@ exports.setupMessageCreateEvent = function (bot) {
                     }
                     const messageId = await ThreadListUpdater.updateThreadsList(msg.channel.guild, channelIdToMessage);
                     await ThreadListUpdater.setThreadListMessage(msg.guildID, channelIdToMessage, messageId);
+                    msg.addReaction("✅");
                     break;
                 case "thread.update":
+                    if (!roleHelper.canAdministrate(msg.member)) {
+                        msg.addReaction("❌");
+                        return;
+                    }
                     await ThreadListUpdater.updateThreadsList(msg.channel.guild);
                     msg.addReaction("✅");
                     break;
