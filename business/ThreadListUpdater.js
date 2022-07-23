@@ -1,9 +1,9 @@
 const { ThreadListMessage } = require("../models/ThreadListMessage");
-const MessageWithEmbed = require("discord-lib/MessageWithEmbed");
-const MessageColors = require("discord-lib/MessageColors");
-const EmbedField = require("discord-lib/EmbedField");
-const MessageSender = require("discord-lib/MessageSender");
-const DiscordUrlBuilder = require("discord-lib/DiscordUrlBuilder");
+const MessageWithEmbed = require("discord-helper-lib/MessageWithEmbed");
+const MessageColors = require("discord-helper-lib/MessageColors");
+const EmbedField = require("discord-helper-lib/EmbedField");
+const MessageSender = require("discord-helper-lib/MessageSender");
+const DiscordUrlBuilder = require("discord-helper-lib/DiscordUrlBuilder");
 
 class ThreadListUpdater {
     NoActiveThreadsEmbed = [{
