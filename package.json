@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/rarDevelopment/thread-bot#readme",
   "dependencies": {
-    "discord-helper-lib": "^1.14.0",
+    "discord-helper-lib": "^1.15.0",
     "dotenv": "^16.0.0",
     "eris": "^0.17.1",
     "mongoose": "^6.2.4"
