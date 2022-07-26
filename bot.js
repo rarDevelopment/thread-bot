@@ -8,6 +8,13 @@ const ThreadDelete = require('./events/ThreadDelete');
 const SetThreadChannel = require("./commands/SetThreadChannel");
 const UpdateThreadsList = require("./commands/UpdateThreadsList");
 const Version = require("./commands/Version");
+const CommandRegistration = require('discord-helper-lib/CommandRegistration');
+const EventRegistration = require('discord-helper-lib/EventRegistration');
+
+const bot = new Eris.CommandClient(process.env.BOT_TOKEN, {}, {
+    intents: 32571,
+    prefix: ["thread.", "Thread."]
+});
 
 const commands = [
     SetThreadChannel,
@@ -15,10 +22,17 @@ const commands = [
     Version
 ];
 
-const bot = new Eris.CommandClient(process.env.BOT_TOKEN, {}, {
-    intents: 32571,
-    prefix: ["thread.", "Thread."]
+const events = [
+    new ThreadCreate(bot),
+    new ThreadUpdate(bot),
+    new ThreadDelete(bot)
+];
+
+bot.once("ready", function (evt) {
+    new CommandRegistration().registerCommands(bot, commands);
 });
+
+new EventRegistration().registerEvents(bot, events);
 
 bot.on("ready", function (evt) {
     console.log(`Logged in as ${bot.user.username} (${bot.user.id})`);
@@ -29,25 +43,8 @@ bot.on("ready", function (evt) {
         console.log("Connected to MongoDB");
     });
 
-    commands.forEach(command => {
-        console.log("setting up command: ", command);
-        bot.registerCommand(command.name, command.execute.bind(command), {
-            description: command.help.usage,
-            fullDescription: command.help.message
-        });
-        if (command.aliases) {
-            command.aliases.forEach(alias => {
-                bot.registerCommandAlias(alias, command.name);
-            });
-        }
-    });
-
     bot.editStatus('online', { name: 'Threading the Needle', type: 1 });
 });
-
-ThreadCreate.setupThreadCreateEvent(bot);
-ThreadUpdate.setupThreadUpdateEvent(bot);
-ThreadDelete.setupThreadDeleteEvent(bot);
 
 bot.on("error", (err) => {
     console.error(err);
