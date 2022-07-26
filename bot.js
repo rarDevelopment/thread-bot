@@ -11,9 +11,12 @@ const Version = require("./commands/Version");
 const CommandRegistration = require('discord-helper-lib/CommandRegistration');
 const EventRegistration = require('discord-helper-lib/EventRegistration');
 
-const bot = new Eris.CommandClient(process.env.BOT_TOKEN, {}, {
+const bot = new Eris.CommandClient(process.env.BOT_TOKEN, {
     intents: 32571,
-    prefix: ["thread.", "Thread."]
+}, {
+    prefix: ["thread.", "Thread."],
+    ignoreBots: true,
+    ignoreSelf: true
 });
 
 const commands = [
